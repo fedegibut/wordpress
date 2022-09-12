@@ -209,6 +209,8 @@ RUN set -eux; \
 	chown -R www-data:www-data /usr/src/wordpress; \
 # pre-create wp-content (and single-level children) for folks who want to bind-mount themes, etc so permissions are pre-created properly instead of root:root
 # wp-content/cache: https://github.com/docker-library/wordpress/issues/534#issuecomment-705733507
+# When restarting the host system hosting Docker Compose and using an accessible volume there are problems with permissions:
+# https://github.com/docker-library/wordpress/discussions/744
 	mkdir wp-content; \
 	for dir in /usr/src/wordpress/wp-content/*/ cache; do \
 		dir="$(basename "${dir%/}")"; \
